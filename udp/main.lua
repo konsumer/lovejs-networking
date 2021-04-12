@@ -1,6 +1,5 @@
 local socket = require("socket")
 
-local address, port = "127.0.0.1", 12345
 local updaterate = 4 -- how long to wait, in seconds, before requesting an update
 
 local t = 0
@@ -11,19 +10,26 @@ local data = "Please wait..."
 -- center of screen for text, vertically
 local vert_center = (love.graphics.getHeight() / 2) - 6
 
+-- say hi and wait for echo
+function sayhi()
+  print("Requesting")
+  udp:send("hi from UDP demo: " .. os.time())
+  data, error = udp:receive()
+end
+
+
 function love.load()
   udp = socket.udp()
-  udp:settimeout(0)
-  udp:setpeername(address, port)
+  udp:settimeout(1)
+  udp:setpeername('127.0.0.1', 12345)
+  sayhi()
 end
 
 function love.update(dt)
   t = t + dt
   requesting = t > updaterate
   if requesting then
-    print("Requesting")
-    udp:send("hi from UDP demo: " .. os.time())
-    data, error = udp:receive()
+    sayhi()
     t=t-updaterate -- set t for the next round
   end
 end

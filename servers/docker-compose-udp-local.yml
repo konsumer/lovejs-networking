@@ -2,11 +2,9 @@ version: "3.3"
 
 services:
   serverudp:
-    build:
-      context: ./
-      dockerfile: luasocket.Dockerfile
+    image: python:alpine
     ports:
       - 12345:12345/udp
     volumes:
       - ./:/server
-    command: lua /server/server-udp.lua
+    command: python3 /server/server-udp.py

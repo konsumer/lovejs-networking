@@ -11,15 +11,10 @@ local data = "Please wait..."
 -- center of screen for text, vertically
 local vert_center = (love.graphics.getHeight() / 2) - 6
 
-function love.load()
-end
-
-function love.update(dt)
-  t = t + dt
-  requesting = t > updaterate
-  if requesting then
-    print("Requesting")
-    local tcp = assert(socket.tcp())
+-- say hi and wait for echo
+function sayhi()
+  print("Requesting")
+  local tcp = assert(socket.tcp())
     tcp:connect(address, port)
     tcp:send("hi from TCP demo: " .. os.time() .. "\n")
     data = ""
@@ -29,6 +24,18 @@ function love.update(dt)
       if error == "closed" then break end
     end
     tcp:close()
+end
+
+
+function love.load()
+  sayhi()
+end
+
+function love.update(dt)
+  t = t + dt
+  requesting = t > updaterate
+  if requesting then
+    sayhi()
     t=t-updaterate -- set t for the next round
   end
 end

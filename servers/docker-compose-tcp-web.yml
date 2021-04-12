@@ -1,15 +1,13 @@
 version: "3.3"
 
 services:
-  servertcp:
-    build:
-      context: ./
-      dockerfile: luasocket.Dockerfile
+    servertcp:
+    image: python:alpine
     ports:
       - 12345:12345/tcp
     volumes:
       - ./:/server
-    command: lua /server/server-tcp.lua
+    command: python3 /server/server-tcp.py
   web:
     ports:
       - 8000:8000
