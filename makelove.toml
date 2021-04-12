@@ -1,0 +1,8 @@
+name = "netdemo"
+default_targets = ["lovejs"]
+build_directory = "../build"
+
+love_files = [
+    "*",
+    "-*/.*",
+]

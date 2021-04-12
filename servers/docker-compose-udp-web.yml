@@ -1,12 +1,12 @@
 version: "3.3"
 
 services:
-  serverudp:
+  servertcp:
     build:
       context: ./
-      dockerfile: Dockerfile-luasocket
+      dockerfile: luasocket.Dockerfile
     ports:
-      - 12345:12345/udp
+      - 12345:12345/tcp
     volumes:
       - ./:/server
     command: lua /server/server-udp.lua
@@ -15,4 +15,4 @@ services:
       - 8000:8000
     build:
       context: ../
-      dockerfile: servers/Dockerfile-webudp
+      dockerfile: servers/web-udp.Dockerfile

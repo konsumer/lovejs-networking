@@ -7,7 +7,7 @@ local tcp = socket.bind('127.0.0.1', 12345)
 local running = true
 while running do
   local client = tcp:accept()
-  client:settimeout(10)
+  client:settimeout(2)
   local data, err = client:receive()
   if data then
     print("OK: " .. data)

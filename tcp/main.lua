@@ -22,7 +22,12 @@ function love.update(dt)
     local tcp = assert(socket.tcp())
     tcp:connect(address, port)
     tcp:send("hi from TCP demo: " .. os.time() .. "\n")
-    data, error = tcp:receive()
+    data = ""
+    while true do
+      local s, error, partial = tcp:receive()
+      data = data .. (s or partial)
+      if error == "closed" then break end
+    end
     tcp:close()
     t=t-updaterate -- set t for the next round
   end
