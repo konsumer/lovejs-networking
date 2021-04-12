@@ -16,3 +16,9 @@ services:
       dockerfile: lovejsweb.Dockerfile
     volumes:
       - ../tcp:/app/src
+  websocket_to_posix_proxy:
+    ports:
+      - 12346:12346/tcp
+    build:
+      context: ./
+      dockerfile: websocket_to_posix_proxy.Dockerfile
