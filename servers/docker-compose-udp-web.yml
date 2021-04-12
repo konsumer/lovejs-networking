@@ -12,5 +12,7 @@ services:
     ports:
       - 8000:8000
     build:
-      context: ../
-      dockerfile: servers/web-udp.Dockerfile
+      context: ./
+      dockerfile: web.Dockerfile
+    volumes:
+      - ../udp:/app/src
