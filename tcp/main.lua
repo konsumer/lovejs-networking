@@ -12,9 +12,6 @@ local data = "Please wait..."
 local vert_center = (love.graphics.getHeight() / 2) - 6
 
 function love.load()
-  udp = socket.udp()
-  udp:settimeout(0)
-  udp:setpeername(address, port)
 end
 
 function love.update(dt)
@@ -22,8 +19,11 @@ function love.update(dt)
   requesting = t > updaterate
   if requesting then
     print("Requesting")
-    udp:send("hi from UDP demo: " .. os.time())
-    data, error = udp:receive()
+    local tcp = assert(socket.tcp())
+    tcp:connect(address, port)
+    tcp:send("hi from TCP demo: " .. os.time() .. "\n")
+    data, error = tcp:receive()
+    tcp:close()
     t=t-updaterate -- set t for the next round
   end
 end

@@ -1,0 +1,12 @@
+version: "3.3"
+
+services:
+  servertcp:
+    build:
+      context: ./
+      dockerfile: Dockerfile-luasocket
+    ports:
+      - 12345:12345/tcp
+    volumes:
+      - ./:/server
+    command: lua /server/server-tcp.lua
