@@ -3,8 +3,10 @@ local socket = require("socket")
 local udp = socket.udp()
 
 -- they say to use 0, but that causes constant timeouts
-udp:settimeout(1)
-udp:setsockname('*', 12345)
+udp:settimeout(2)
+udp:setsockname('127.0.0.1', 12345)
+
+print("starting UDP demo-server on port 12345")
 
 local running = true
 while running do
@@ -12,7 +14,7 @@ while running do
   if data then
     print(msg_or_ip .. " : " .. data)
   else
-    print("Errror: " .. msg_or_ip)
+    print(os.date("%x %X Error: " .. msg_or_ip))
   end
   socket.sleep(0.01)
 end

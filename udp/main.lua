@@ -1,12 +1,12 @@
 local socket = require("socket")
 
-local address, port = "localhost", 12345
+local address, port = "127.0.0.1", 12345
 local updaterate = 2 -- how long to wait, in seconds, before requesting an update
 
 local t = 0
 local requesting = false
 local error = nil
-local data = nil
+local data = "Please wait..."
 
 -- center of screen for text, vertically
 local vert_center = (love.graphics.getHeight() / 2) - 6
@@ -14,7 +14,7 @@ local vert_center = (love.graphics.getHeight() / 2) - 6
 function love.load()
   udp = socket.udp()
   -- they say to use 0, but that causes constant timeouts
-  udp:settimeout(1)
+  udp:settimeout(0)
   udp:setpeername(address, port)
 end
 
@@ -25,6 +25,11 @@ function love.update(dt)
     udp:send("hi from UDP demo: " .. os.time())
     data, error = udp:receive()
     t=t-updaterate -- set t for the next round
+    if error then
+      -- reset connection on error
+      udp = socket.udp()
+      udp:setpeername(address, port)
+    end
   end
 end
 
