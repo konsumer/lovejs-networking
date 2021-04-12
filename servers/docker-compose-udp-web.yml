@@ -15,4 +15,4 @@ services:
       - 8000:8000
     build:
       context: ../
-      dockerfile: servers/Dockerfile-web
+      dockerfile: servers/Dockerfile-webudp
