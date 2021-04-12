@@ -1,0 +1,5 @@
+# This is simply luajit + luarocks + luasocket
+
+FROM akorn/luarocks:luajit2.1-alpine as luasocket
+
+RUN  apk --no-cache add build-base zip && luarocks install luasocket
