@@ -11,11 +11,11 @@ local running = true
 while running do
   local data, msg_or_ip, port_or_nil = udp:receivefrom()
   if data then
+    -- log and echo requests
     print(msg_or_ip .. " : " .. data)
     udp:sendto(data, msg_or_ip, port_or_nil)
-  -- ignoring errors, because it's too chatty about timeouts
-  -- else
-  --   print(os.date("%x %X Error: " .. msg_or_ip))
+  else
+    print(os.date("%x %X Error: " .. msg_or_ip))
   end
   socket.sleep(0.01)
 end

@@ -1,7 +1,7 @@
 local socket = require("socket")
 
 local address, port = "127.0.0.1", 12345
-local updaterate = 2 -- how long to wait, in seconds, before requesting an update
+local updaterate = 4 -- how long to wait, in seconds, before requesting an update
 
 local t = 0
 local requesting = false
@@ -21,18 +21,18 @@ function love.update(dt)
   t = t + dt
   requesting = t > updaterate
   if requesting then
-    t=t-updaterate -- set t for the next round
     udp:send("hi from UDP demo: " .. os.time())
     data, error = udp:receive()
+    t=t-updaterate -- set t for the next round
   end
 end
 
 function love.draw()
   love.graphics.setColor( 1, 1, 1, 1 )
   if requesting then
-    love.graphics.printf("!", 0, 0, love.graphics.getWidth(), "right")
-  else
     love.graphics.printf("...", 0, 0, love.graphics.getWidth(), "right")
+  else
+    love.graphics.printf("!", 0, 0, love.graphics.getWidth(), "right")
   end
   if data then
     love.graphics.setColor( 0, 1, 0, 1 )
