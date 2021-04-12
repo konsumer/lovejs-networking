@@ -1,6 +1,6 @@
 # This is node build of love app + static webserver
 
-FROM python:alpine as lovejswebtcp
+FROM python:alpine as lovejswebudp
 
 COPY udp /app/src
 COPY makelove.toml /app/
@@ -11,4 +11,4 @@ RUN apk del build-base zip zlib-dev libjpeg-turbo-dev
 
 WORKDIR /app/pub
 
-CMD python3 -m http.server 8000
+CMD echo "Static webserver running on http://localhost:8000" && python3 -m http.server 8000
