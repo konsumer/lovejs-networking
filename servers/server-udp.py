@@ -1,11 +1,12 @@
+# this is a simple UDP socket echo-server (send back upper-case)
+
 import socketserver
 
 class MyUDPHandler(socketserver.BaseRequestHandler):
     def handle(self):
         data = self.request[0].strip()
         socket = self.request[1]
-        print("{} wrote:".format(self.client_address[0]))
-        print(data)
+        print(f"{self.client_address[0]} wrote: {data}")
         socket.sendto(data.upper(), self.client_address)
 
 if __name__ == "__main__":

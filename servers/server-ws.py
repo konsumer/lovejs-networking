@@ -1,11 +1,12 @@
-# this is a simple websocket echo server
+# this is a simple Uwebsocket echo-server (send back upper-case)
 
 import asyncio
 import websockets
 
 async def echo(websocket, path):
     async for message in websocket:
-        await websocket.send(message)
+        print(f"{path} wrote: {message}")
+        await websocket.send(message.upper())
 
 start_server = websockets.serve(echo, "localhost", 8765)
 
