@@ -6,7 +6,7 @@ services:
       context: ./
       dockerfile: Dockerfile-luasocket
     ports:
-      - 12345:12345
+      - 12345:12345/udp
     volumes:
       - ./:/server
     command: lua /server/server-udp.lua

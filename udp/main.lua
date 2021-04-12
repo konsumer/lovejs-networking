@@ -13,7 +13,6 @@ local vert_center = (love.graphics.getHeight() / 2) - 6
 
 function love.load()
   udp = socket.udp()
-  -- they say to use 0, but that causes constant timeouts
   udp:settimeout(0)
   udp:setpeername(address, port)
 end
@@ -22,14 +21,9 @@ function love.update(dt)
   t = t + dt
   requesting = t > updaterate
   if requesting then
+    t=t-updaterate -- set t for the next round
     udp:send("hi from UDP demo: " .. os.time())
     data, error = udp:receive()
-    t=t-updaterate -- set t for the next round
-    if error then
-      -- reset connection on error
-      udp = socket.udp()
-      udp:setpeername(address, port)
-    end
   end
 end
 
