@@ -2,13 +2,10 @@
 
 FROM node:alpine as lovejsweb
 
-RUN apk add --no-cache git zip
-RUN git clone --depth=1 https://github.com/Davidobot/love.js.git /app/love.js && cd /app/love.js && npm i && npm i -g light-server
-RUN apk del git
-
-COPY modified /app/web-stuff
+RUN apk add --no-cache zip
+RUN npm i -g light-server love.js
 
 WORKDIR /app/pub
 VOLUME /app/src
 
-CMD cd /app/src && rm -f /app/game.love && zip -r /app/game.love . && node /app/love.js/index.js --title "Network Demo" --memory 16777216 /app/game.love /app/pub && cp /app/web-stuff/* /app/pub/ && light-server -p 8000 -s /app/pub
+CMD cd /app/src && rm -f /app/game.love && zip /app/game.love *.lua && love.js --title "Network Demo" --memory 16777216 /app/game.love /app/pub && cp /app/src/index.html /app/pub && light-server -p 8000 -s /app/pub
