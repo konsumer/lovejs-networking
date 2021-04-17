@@ -9,6 +9,6 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
         print(f"{self.client_address[0]} wrote: {data}")
         socket.sendto(data.upper(), self.client_address)
 
-if __name__ == "__main__":
-    with socketserver.UDPServer(('0.0.0.0', 12345), MyUDPHandler) as server:
-        server.serve_forever()
+print("Starting simple UDP socket server on port 12345")
+with socketserver.UDPServer(('0.0.0.0', 12345), MyUDPHandler) as server:
+    server.serve_forever()
